@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './ChatComponent.css';
 
-const ChatComponent = () => {
+const ChatComponent = ({phone}) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
 
   const [mobile,setMobile]=useState("")
   const fetchMessages = async () => {
-    const response = await fetch(process.env.REACT_APP_API_URL+'/api/getWhatsappMessages/'+mobile, {
+    const response = await fetch(process.env.REACT_APP_API_URL+'/api/getWhatsappMessages/'+phone, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const ChatComponent = () => {
           'Authorization': `Bearer ${sessionStorage.getItem("token")}` // replace with your token
         },
         body: JSON.stringify({
-          to: mobile,
+          to: phone,
           message: newMessage
         }),
       });
@@ -48,10 +48,11 @@ const ChatComponent = () => {
   };
 
   useEffect(() => {
+    if(!phone) return;
     fetchMessages();
     const interval = setInterval(fetchMessages, 2000);
     return () => clearInterval(interval);
-  }, [mobile]);
+  }, [phone]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

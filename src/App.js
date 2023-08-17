@@ -21,7 +21,7 @@ import Form from "./form";
 import QuestionData from "./Components/question/QuestionData";
 import SendQuestion from "./Components/question/SendQuestion";
 import { Container } from "react-bootstrap";
-import ChatComponent from './ChatComponent';
+import ChatScreen from './ChatScreen';
 import ResQuestion from "./Components/question/ResQuestion";
 import Scheduledmessages from "./Components/question/Scheduledmessages";
 
@@ -47,7 +47,7 @@ function App() {
         <Route path="/form" element={<Form />} />
         <Route path="/question" element={<QuestionData />} />
         <Route path="/filterQ" element={<SendQuestion />} />
-        <Route path='/whatsapp' element={<ChatComponent />}/>
+        <Route path='/whatsapp' element={<ChatScreen />}/>
         <Route path="/ResQuestion/:id" element={<ResQuestion />}/>
         <Route path="/scheduledmessages" element={<Scheduledmessages/>}/>
         <Route

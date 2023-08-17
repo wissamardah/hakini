@@ -679,6 +679,25 @@ router.get("/getWhatsappMessages/:phone",userMiddleware.isAdmin, (req, res, next
   );
 });
 
+router.get("/getWhatsappNames",userMiddleware.isAdmin, (req, res, next) => {
+  db.query(
+    "SELECT * FROM chat r1 JOIN ( SELECT phone, MAX(timestamp) AS max_timestamp FROM chat GROUP BY phone ) r2 ON r1.phone = r2.phone AND r1.timestamp = r2.max_timestamp order by r1.timestamp desc;",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send({
+          status: "error",
+          msg: "Internal Server Error",
+        });
+      }
+      res.status(200).send({
+        status: "success",
+        data: result,
+      });
+    }
+  );
+});
+
 router.post("/sendWhatsapp",userMiddleware.isAdmin, (req, res, next) => {
   const { to, message } = req.body;
 

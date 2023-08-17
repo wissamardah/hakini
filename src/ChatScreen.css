@@ -1,0 +1,31 @@
+#chatlist {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+.chat-cell {
+  width: 200px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+}
+.chat-cell-message {
+  color: grey;
+}
+.chat-menu ul {
+  padding: 20px;
+}
+.chat-cell-l {
+  display: flex;
+  flex-direction: column;
+  white-space: pre;
+}
+.chat-cell:hover {
+  background-color: rgb(233, 229, 229);
+  transition: 0.2s;
+}
+.chat-cell p {
+  margin: 0;
+}

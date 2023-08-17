@@ -1,200 +1,104 @@
 /* Reset default margin and padding */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Cairo', Arial, sans-serif; /* Update the font-family */
-
-  }
-  
-  /* Set a nice background */
-  #chatbody {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-    background-image: url('https://wallpaperstock.net/whatsapp-background_wallpapers_51439_1280x960.jpg');
-    background-size: cover;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Cairo", Arial, sans-serif; /* Update the font-family */
 }
-  
-  /* Apply bold font weight to all text */
-  #chatbody,
-  .message strong,
-  .message .bubble,
-  .message .status,
-  .message .time,
-  #messageInput {
-    font-weight: bold;
-  }
-  #title1{
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-background-color: #ffffffcc   ;
-padding: 10px;
-text-align: center;
-z-index: 1;
-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-max-width: 500px;
-margin-left: auto;
-margin-right: auto;
+#chatbody {
+  width: 100%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  height: 100vh;
+  display: flex;
+  align-items: self-end;
+  justify-content: end;
+  flex-direction: column;
+  overflow-y: scroll;
 }
-
-/* Sender details */
-#senderDetails {
-margin-bottom: 0;
-text-align: center;
+#sendMessageForm {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  display: flex;
+  background-color: #ffffff00;
+  justify-content: center;
+}
+#sendMessageForm button {
+  flex: 1;
+  margin-left: 10px;
+  background-color: #128c7e;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#sendMessageForm input {
+  width: 100%;
+}
+/* Individual message container */
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px; /* Update the margin-bottom value as needed */
 }
 
-  /* Chat container */
-  #chatContainer {
-    width: 100%;
-    margin: 20px auto;
-    background-color: #ffffff00;
-    border-radius: 4px;
-    overflow-y: auto;
-    padding: 10px;
-    max-height: calc(100vh - 101px); /* Adjust the max-height as needed */
-    padding: 50px;
-    padding-top: 81px;
-
-  }
-  #chatContainer::-webkit-scrollbar {
-width: 0.5em;
+/* Sender's name */
+.message strong {
+  margin-right: 5px;
 }
 
-#chatContainer::-webkit-scrollbar-track {
-background-color: transparent;
+/* Message bubble */
+.message .bubble {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 16px;
+  position: relative;
 }
 
-#chatContainer::-webkit-scrollbar-thumb {
-background-color: #d1d1d1;
-border-radius: 0.25em;
+/* Sent message bubble */
+.message.sent .bubble {
+  background-color: #dcf8c6;
+  color: #000000;
+  align-self: flex-end;
 }
-  /* Individual message container */
-  .message {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px; /* Update the margin-bottom value as needed */
-  }
-  
-  /* Sender's name */
-  .message strong {
-    margin-right: 5px;
-  }
-  
-  /* Message bubble */
-  .message .bubble {
-    max-width: 70%;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 16px;
-    position: relative;
-  }
-  
-  /* Sent message bubble */
-  .message.sent .bubble {
-    background-color: #DCF8C6;
-    color: #000000;
-    align-self: flex-end;
-  }
-  
-  /* Received message bubble */
-  .message.received .bubble {
-    background-color: #E6E5EB;
-    color: #000000;
-    align-self: flex-start;
-  }
-  
-  /* Message status ticks for sent messages */
-  .message.sent .status {
-      font-size: 10px;
+
+/* Received message bubble */
+.message.received .bubble {
+  background-color: #e6e5eb;
+  color: #000000;
+  align-self: flex-start;
+}
+
+/* Message status ticks for sent messages */
+.message.sent .status {
+  font-size: 10px;
   position: absolute;
   bottom: 5px;
   right: 11px;
-  }
-  
-  /* Message time */
-  .message .time {
-    font-size: 10px;
-    color: #888888;
-    align-self: flex-end;
-  }
-  .message.sent .time {
-    font-size: 10px;
-    color: #888888;
-    align-self: flex-end;
-    margin-bottom: 20px;
-  }
-  
-  /* Input form */
-  #sendMessageForm {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-    padding: 10px;
-    display: flex;
-    background-color: #ffffff00;
-    position: absolute;
-    bottom: 0;
+}
 
-  }
-  
-  /* Message input field */
-  #messageInput {
-    flex: 20;
-    border: none;
-    padding: 8px;
-    border-radius: 4px;
-    overflow-y: auto; /* Add scroll capability to the input field */
-    background-color: #ffffffdd;
-
-  }
-  
-  /* Send button */
-  #sendMessageForm button {
-      flex: 1;
-      margin-left: 10px;
-    background-color: #128C7E;
-    color: #ffffff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* Send button on hover */
-  #sendMessageForm button:hover {
-    background-color: #0E714C;
-  }
-  
-  /* Media queries for responsiveness */
-  @media screen and (max-width: 768px) {
-    /* Adjust chat container and form margins on smaller screens */
-    #chatContainer {
-      margin: 20px auto;
-      max-height: calc(100vh - 110px); /* Adjust the max-height as needed */
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-    
-    #sendMessageForm {
-      margin: 20px 0px auto auto;
-    }
-  
-    /* Increase the font size of messages on smaller screens */
-    .message .bubble {
-      font-size: 14px;
-    }
-
-  }
-    
+/* Message time */
+.message .time {
+  font-size: 10px;
+  color: #888888;
+  align-self: flex-end;
+}
+.message.sent .time {
+  font-size: 10px;
+  color: #888888;
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+#chatContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 110px;
+}
