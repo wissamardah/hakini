@@ -1,0 +1,12 @@
+.form-field {
+    max-width: 500px;  /* Change this value as per your requirements */
+}
+
+
+.form-check-right {
+    justify-content: flex-end;
+    direction: rtl;
+}
+.form-check-label {
+    margin-right: 50px;
+}
