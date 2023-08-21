@@ -13,11 +13,17 @@ const ChatScreen = () => {
     async function fetchNames() {
       try {
         const response = await fetch(
-          process.env.REACT_APP_API_URL+"api/getWhatsappNames"
+          process.env.REACT_APP_API_URL+"/api/getWhatsappNames",
+          {
+
+            headers: new Headers({
+              'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                      }), 
+          }
         );
         const data = await response.json();
         setNames(data.data);
-        console.log(data.data);
+        console.log(data);
       } catch (error) {
         console.log(error);
 

@@ -826,46 +826,18 @@ else if(req.body.entry[0].changes[0].value.messages){
       change.value.messages.forEach(message => {
         const messageData=message
 
-        if(messageData.type=="text"){
-
           db.query(
-            "select lastmessage.* ,questions.id as questionId from (select chat.* from chat where (phone=? and sent=1) order by id desc limit 1) lastmessage inner join questions on questions.question=lastmessage.message",
-            [messageData.from],
+            "insert into chat (message_id,phone,timestamp,message,name,sent,status) values (?,?,?,?,?,0,'recieved')",
+            [messageData.id,messageData.from,messageData.timestamp,messageData.text.body,change.value.contacts[0].profile.name],
             (err, result) => {
               if (err) {
              console.error(err)
               }
            
-              if(result.length>0){
-                db.query(
-                  "insert into questionsresponses (message_id,questionId,phone,timestamp,message,name,sent,status) values (?,?,?,?,?,?,0,'recieved')",
-                  [messageData.id,result[0].questionId,messageData.from,messageData.timestamp,messageData.text.body,change.value.contacts[0].profile.name],
-                  (err, result) => {
-                    if (err) {
-                   console.error(err)
-                    }
-                 
-                  }
-                );
-              }
-              else{
-                db.query(
-                  "insert into chat (message_id,phone,timestamp,message,name,sent,status) values (?,?,?,?,?,0,'recieved')",
-                  [messageData.id,messageData.from,messageData.timestamp,messageData.text.body,change.value.contacts[0].profile.name],
-                  (err, result) => {
-                    if (err) {
-                   console.error(err)
-                    }
-                 
-                  }
-                );
-              }
             }
           );
-
-          
         
-        }
+        
       
       });
     });

@@ -31,7 +31,7 @@ const LoginPage = () => {
       if (status === "success") {
         toastr.success("تم تسجيل الدخول  بنجاح");
         sessionStorage.setItem("token", token);
-        navigate("/admin-panel");
+        navigate("/whatsapp");
       } else {
         toastr.error(msg, "خطأ");
       }

@@ -17,6 +17,7 @@ const ChatComponent = ({phone}) => {
     });
 
     const data = await response.json();
+    console.log(data)
     if (data.status === 'success') {
       setMessages(data.data.reverse());
     }
