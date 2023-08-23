@@ -46,7 +46,7 @@ const ChatScreen = () => {
                   <p className="chat-cell-message">{name.message}</p>
                 </div>
                 <div className="chat-cell-r">
-                  <small>{new Date(parseInt(name.timestamp)).toLocaleString(undefined,options)}</small>
+                  <small>{new Date(parseInt(name.timestamp * 1000)).toLocaleString(undefined,options)}</small>
                   <i></i>
                 </div>
               </li>

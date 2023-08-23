@@ -658,7 +658,7 @@ data.push( {
 });
 
 router.get("/getWhatsappMessages/:phone",userMiddleware.isAdmin, (req, res, next) => {
- const { phone } = req.params;
+  const { phone } = req.params;
   db.query(
     "select * from chat where phone=? order by id desc",
     [ phone ],
@@ -681,7 +681,7 @@ router.get("/getWhatsappMessages/:phone",userMiddleware.isAdmin, (req, res, next
 
 router.get("/getWhatsappNames",userMiddleware.isAdmin, (req, res, next) => {
   db.query(
-    "SELECT * FROM chat r1 JOIN ( SELECT phone, MAX(timestamp) AS max_timestamp FROM chat GROUP BY phone ) r2 ON r1.phone = r2.phone AND r1.timestamp = r2.max_timestamp order by r1.timestamp desc;",
+    "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY phone ORDER BY timestamp DESC) AS row_num FROM hakini1.chat WHERE status = 'recieved') AS NumberedMessages WHERE row_num = 1;",
     (err, result) => {
       if (err) {
         console.log(err);

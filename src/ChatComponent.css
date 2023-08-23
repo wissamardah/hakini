@@ -13,7 +13,6 @@
   align-items: self-end;
   justify-content: end;
   flex-direction: column;
-  overflow-y: scroll;
 }
 #sendMessageForm {
   width: 100%;
@@ -46,6 +45,11 @@
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 20px; /* Update the margin-bottom value as needed */
+}
+#title1 {
+    width: 100%;
+    text-align: center;
+    background-color: aliceblue;
 }
 
 /* Sender's name */
@@ -100,5 +104,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 110px;
+  padding-top: 20px;
+  overflow-y: scroll;
+  height: 100%;
 }
