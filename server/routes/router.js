@@ -698,6 +698,26 @@ router.get("/getWhatsappNames",userMiddleware.isAdmin, (req, res, next) => {
   );
 });
 
+router.post("/createNewContact", (req, res, next) => {
+  const { to, message,timestamp } = req.body;
+  db.query(
+    "insert into chat (message_id,phone,timestamp,message,name,sent,status) values (?,?,?,'',?,-1,?) ON DUPLICATE KEY UPDATE status=?",
+    [Math.floor(Math.random() * Math.pow(10, 62)),to,timestamp,to,"recieved","recieved"],
+    (err, result) => {
+      if (err) {
+     
+        console.error(err)
+      }
+      else {
+        console.error('Response:', result);
+        res.send(result)
+      }
+   
+    }
+  );
+
+});
+
 router.post("/sendWhatsapp",userMiddleware.isAdmin, (req, res, next) => {
   const { to, message } = req.body;
 

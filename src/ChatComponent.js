@@ -8,7 +8,7 @@ const ChatComponent = ({phone}) => {
 
   const [mobile,setMobile]=useState("")
   const fetchMessages = async () => {
-    const response = await fetch(process.env.REACT_APP_API_URL+'/api/getWhatsappMessages/'+phone, {
+    const response = await fetch(process.env.REACT_APP_API_URL+'/api/getWhatsappMessages/'+phone || mobile, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const ChatComponent = ({phone}) => {
           'Authorization': `Bearer ${sessionStorage.getItem("token")}` // replace with your token
         },
         body: JSON.stringify({
-          to: phone,
+          to: phone || mobile,
           message: newMessage
         }),
       });
@@ -49,11 +49,11 @@ const ChatComponent = ({phone}) => {
   };
 
   useEffect(() => {
-    if(!phone) return;
+    if(!phone && !mobile) return;
     fetchMessages();
     const interval = setInterval(fetchMessages, 2000);
     return () => clearInterval(interval);
-  }, [phone]);
+  }, [phone,mobile]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -63,13 +63,13 @@ const ChatComponent = ({phone}) => {
   return (
     <div id='chatbody'>
       <div id="title1">
-        {/* Adapt this to your needs */}
         <h3 id="sendername">{sender ? sender.name : ''}</h3>
         <p id="senderDetails">{sender ? sender.phone : ''}</p>
       </div>
 
       <div id="chatContainer">
         {messages.map((message) => (
+          message.message &&
           <div className={`message ${message.sent ? 'sent' : 'received'}`} key={message.id}>
             <div className="bubble">
               {message.message}

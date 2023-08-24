@@ -1,42 +1,58 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./ChatScreen.css";
 import ChatComponent from "./ChatComponent";
+import AddNewContactmodal from "./models/AddNewContactmodal";
+import plus from "../src/image/plus.svg";
 
 const ChatScreen = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [names, setNames] = useState([]);
   const [phone, setPhone] = useState(0);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
   const options = { hour: 'numeric', minute: 'numeric', hour12: true };
 
-  useEffect(() => {
-    async function fetchNames() {
-      try {
-        const response = await fetch(
-          process.env.REACT_APP_API_URL+"/api/getWhatsappNames",
-          {
 
-            headers: new Headers({
-              'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-                      }), 
-          }
-        );
-        const data = await response.json();
-        setNames(data.data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-        console.error("Error fetching names:", error);
-      }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const fetchNames = async () => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API_URL+"/api/getWhatsappNames",
+        {
+
+          headers: new Headers({
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }), 
+        }
+      );
+      const data = await response.json();
+      setNames(data.data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+
+      console.error("Error fetching names:", error);
     }
+  };
 
+  useEffect(() => {
     fetchNames();
+    const interval = setInterval(fetchNames, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div id="chatlist">
       <div className="chat-menu">
+        <button className="new-contact" onClick={handleOpenModal}><img src={plus}/></button>
+
         <ul>
           {names &&
             names.map((name, index) => (
@@ -54,6 +70,7 @@ const ChatScreen = () => {
         </ul>
       </div>
         <ChatComponent phone={phone}/>
+        <AddNewContactmodal isOpen={isModalOpen} onClose={handleCloseModal} fetchNames={fetchNames} />
     </div>
   );
 };
