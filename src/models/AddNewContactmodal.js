@@ -4,6 +4,8 @@ import close from "../../src/image/close.svg";
 
 const AddNewContactmodal = ({ isOpen, onClose, fetchNames }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [numberName, setNumberName] = useState("");
+
   if (!isOpen) {
     return null;  
   }
@@ -11,8 +13,8 @@ const AddNewContactmodal = ({ isOpen, onClose, fetchNames }) => {
   const sendMessage = async (event) => {
     event.preventDefault();
     
-    if (phoneNumber !== "") {
-      const response = await fetch("http://localhost:3001/api/createNewContact", {
+    if (phoneNumber !== "" && numberName !== "") {
+      const response = await fetch(process.env.REACT_APP_API_URL+"/api/createNewContact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,6 +22,7 @@ const AddNewContactmodal = ({ isOpen, onClose, fetchNames }) => {
         },
         body: JSON.stringify({
           to: phoneNumber,
+          name: numberName,
           message: "",
           timestamp: Math.floor(Date.now() / 1000),
         }),
@@ -45,6 +48,13 @@ const AddNewContactmodal = ({ isOpen, onClose, fetchNames }) => {
             type="number"
             onChange={(e) => {
                 setPhoneNumber(e.target.value)
+            }}
+          />
+          <input
+            placeholder="تسمية مؤقتة"
+            type="text"
+            onChange={(e) => {
+              setNumberName(e.target.value)
             }}
           />
           <button type="submit">اضافة</button>
